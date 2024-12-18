@@ -131,8 +131,41 @@ main {
 }
 
 @media (hover: hover) {
+	.logo {
+		position: relative;
+		transition: 300ms;
+		border-radius: 0px;
+	}
+	
+	.logo::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: var(--text);
+		z-index: 1;
+		transition: 300ms;
+		border-radius: 10px;
+		transform: rotate(45deg) scale(.8);
+	}
+	
+	.logo svg {
+		position: relative;
+		z-index: 10;
+	}
+	
 	.logo:hover {
-		background-color: var(--linkhover);
+		border-radius: 10px;
+
+		&::before {
+			transform: rotate(45deg) scale(1);
+		}
+	}
+
+	.logo:active {
+		transform: scale(.9);
 	}
 }
 
