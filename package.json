@@ -1,0 +1,15 @@
+{
+  "name": "maxmiracolo-com",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.9",
+    "graphql-request": "^7.1.2"
+  }
+}

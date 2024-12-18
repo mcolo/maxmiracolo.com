@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520898511/portfolio/apple-touch-icon.png?v=PY43Q9Ba9A">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520899195/favicon-32.png?v=PY43Q9Ba9A">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520899195/favicon-16.png?v=PY43Q9Ba9A">
+	<link rel="mask-icon" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520898512/portfolio/safari-pinned-tab.svg?v=PY43Q9Ba9A" color="#020617">
+	<slot name="head" />
+</head>
+<body>
+	<header>
+		<a class="logo" id="logo" href="/">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 49 39">
+				<path fill="#fff" d="M24.183 38.623c-.066-.26-.33-5.354-.528-11.296l-.396-10.773-1.518 5.811c-.792 3.134-2.112 7.182-2.838 8.945-1.254 2.808-1.65 3.2-3.3 3.2-2.509 0-3.037-1.437-4.357-10.774-1.122-8.619-1.386-9.533-2.178-8.162-.594 1.11-5.082 18.413-5.412 20.895-.264 1.959-2.31 2.22-3.432.457-.594-.849-.066-3.722 2.31-13.06C6.164 9.96 8.342 4.475 10.322 4.475c1.98 0 2.376 1.306 4.093 12.276.858 5.484 1.716 9.598 1.98 9.14.264-.456 1.386-4.635 2.508-9.336C22.07 3.625 22.73 1.862 24.579 1.862c.792 0 1.716.457 1.914 1.045.198.588.594 5.028.858 9.925l.396 8.88 1.782-5.485c2.244-7.117 3.168-8.619 5.28-8.358 2.047.262 2.509 1.829 2.575 9.599.066 3.395.264 6.007.462 5.746.198-.196 1.056-3.526 1.914-7.444C41.41 8 43.588 1.732 45.04.556c.528-.391 1.584-.653 2.442-.522L49 .23v36.565l-1.452.196c-.858.13-1.65-.261-2.046-.98-.33-.652-.594-6.398-.528-12.732 0-6.334 0-11.427-.132-11.296-.066.065-.924 3.918-1.782 8.554-1.98 10.251-2.706 12.471-4.224 13.32-2.64 1.371-4.357-2.155-5.215-10.447l-.528-4.898-1.782 6.857c-3.762 14.3-3.432 13.385-5.346 13.581-.924.13-1.782 0-1.782-.327Z"/>
+			</svg>
+		</a>
+	</header>
+	<main>
+		<slot name="body" />
+	</main>
+</body>
+</html>
+
+<style is:global>
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
+
+/* End CSS Reset */
+
+:root {
+	--slate950: #020617;
+	--slate900: #0f172a;
+	--slate800:	#1e293b;
+	--slate400: #94a3b8;
+	--link: #3b82f6;
+	--linkhover: #fb7185;
+	--text: whitesmoke;
+}
+
+h1,h2,h3,h4,p {
+	color: var(--text);
+}
+
+a {
+	transition: 200ms;
+}
+
+body {
+	background-color: var(--slate950);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+}
+
+header {
+	margin: 2rem 0 1rem;
+}
+
+.logo {
+	width: 3rem;
+	height: 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: .5rem;
+	background-color: var(--text);
+}
+
+.logo svg {
+	width: 100%;
+}
+
+.logo svg path {
+	fill: var(--slate950);
+}
+
+
+main {
+	margin-bottom: 12rem;
+}
+
+@media (min-width: 42rem) {
+	header,
+	main {
+		width: 40rem;
+		padding: 1rem;
+	}
+}
+
+@media (max-width: 42rem) {
+	header,
+	main {
+		width: 100%;
+		padding: 1rem 1.5rem;
+	}
+}
+
+@media (hover: hover) {
+	.logo:hover {
+		background-color: var(--linkhover);
+	}
+}
+
+</style>

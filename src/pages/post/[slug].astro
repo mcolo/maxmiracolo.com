@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getAllPosts, getPost } from '../../lib/client';
+
+export async function getStaticPaths() {
+  const data = await getAllPosts();
+  const allPosts = data.publication.posts.edges;
+  return allPosts.map((post) => {
+    return {
+      params: { slug: post.node.slug },
+    }
+  })
+}
+const { slug } = Astro.params;
+const post = await getPost(slug);
+---
+
+<Layout>
+  <Fragment slot="head">
+    <title>Max Miracolo | {post.title}</title>
+    <link rel="canonical" href=`https://mcolo.hashnode.dev/${slug}` />
+  </Fragment>
+  <Fragment slot="body">
+    <article>
+      {post.coverImage &&
+        <img src={post.coverImage.url} alt={post.title} />
+      }
+      <h1 class="title">{post.title}</h1>
+      <p class="read-time">{post.readTimeInMinutes} min read</p>
+      <div class="post-content"><Fragment set:html={post.content.html} /></div>
+    </article>
+  </Fragment>
+</Layout>
+
+<style>
+  .title {
+    font-size: 2rem;
+    line-height: 1.1;
+    text-wrap: auto;
+  }
+
+	.read-time {
+		color: var(--slate400);
+		text-transform: uppercase;
+		font-size: .875rem;
+	}
+
+</style>
+
+<style is:global>
+  .post-content p {
+    font-size: 1.125rem;
+  }
+</style>
