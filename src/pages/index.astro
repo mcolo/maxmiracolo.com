@@ -29,26 +29,6 @@ const allPosts = data.publication.posts.edges;
 	</Fragment>
 </Layout>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-	let count = 0;
-	const lightLinkColors = ['#fbbf24', '#4ade80', '#c084fc', '#fb7185', '#3b82f6'];
-	const logo = document.getElementById('logo');
-	//@ts-ignore
-	logo.addEventListener('click', (e) => {
-		e.preventDefault();
-		document.body.style.setProperty('--link', lightLinkColors[count]);
-		//@ts-ignore
-		document.body.style.setProperty('--linkhover', lightLinkColors.at(count-1));
-		if (count === lightLinkColors.length - 1) {
-			count = 0;
-		} else {
-			count += 1;
-		}
-	});
-});
-</script>
-	
 <style>
 	.intro {
 		margin-bottom: 6rem;
