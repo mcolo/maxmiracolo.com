@@ -25,25 +25,35 @@
 
 <script>
 	const pairs = [
-		["#fbbf24", "#c084fc"],
-		['#4ade80', '#c084fc'],
-		['#fb7185', '#3b82f6'],
-		["#c084fc", "#fbbf24"],
-		['#3b82f6', '#fb7185'],
+		['#34d399', '#e879f9'], // emerald
+		['#fbbf24', '#a78bfa'], // amber
+		['#ec4899', '#3b82f6'], // pink
+		['#e879f9', '#34d399'], // fuschia
+		['#a78bfa', '#fbbf24'], // violet
+		['#3b82f6', '#ec4899'], // blue
 	];
 	
 	document.addEventListener('DOMContentLoaded', () => {
 		let intervalId: number | undefined;
 		let count = 0;
 		let intervalCount = 0;
+		let flowerFlag = true;
 		const logo = document.getElementById('logo');
 
-		//@ts-ignore
-		logo.addEventListener('click', (e) => {
+		logo?.addEventListener('mouseenter', () => {
+			flowerFlag ? logo.classList.add('flower') : logo.classList.add('spike');
+		});
+
+		logo?.addEventListener('mouseleave', () => {
+			flowerFlag ? logo.classList.remove('flower') : logo.classList.remove('spike');
+			flowerFlag = !flowerFlag;
+		});
+
+		logo?.addEventListener('click', (e) => {
 			if (intervalId !== undefined) clearInterval(intervalId);
 			e.preventDefault();
 			updateLinkColor(count);
-			if (count === 4) {
+			if (count === 5) {
 				count = 0;
 			} else {
 				count += 1;
@@ -111,7 +121,7 @@ p, h1, h2, h3, h4, h5, h6 {
 	--slate800:	#1e293b;
 	--slate400: #94a3b8;
 	--link: #3b82f6;
-	--linkhover: #fb7185;
+	--linkhover: #ec4899;
 	--text: whitesmoke;
 }
 
@@ -144,7 +154,7 @@ header {
 	padding: .5rem;
 	background-color: var(--text);
 	cursor: pointer;
-	transition: border-radius 250ms, transform 150ms;
+	transition: all 150ms, border-radius 250ms;
 	border: none;
 	position: relative;
 	border-radius: 0px;
@@ -156,7 +166,7 @@ header {
 }
 
 .logo:active {
-	transform: scale(.9);
+	scale: .9;
 }
 
 .logo svg {
@@ -190,8 +200,8 @@ main {
 }
 
 @media (hover: hover) {
-	.logo::before {
-		content: "";
+	.logo::before,
+	.logo::after {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -200,40 +210,57 @@ main {
 		background-color: var(--text);
 		z-index: 1;
 		transition: 300ms;
-		border-radius: 10px;
-		transform: rotate(45deg) scale(.8);
 	}
+
+	.logo::before {
+		content: "";
+		transform: rotate(45deg) scale(.7);
+	}
+
+	.logo.spike::before,
+	.logo.spike::after {
+		content:"";
+	}
+
+	.logo.flower::before {
+		border-radius: 10px;
+	}
+
+	.logo.spike::before { transform: rotate(30deg) scale(.7); }
+	.logo.spike::after  { transform: rotate(60deg) scale(.7); }
 	
 	.logo:hover {
-		border-radius: 10px;
+		&.flower { border-radius: 10px; }
+		&.spike { rotate: -15deg; }
 
-		&::before {
-			transform: rotate(45deg) scale(1);
-		}
+		&.spike::before { transform: rotate(30deg) scale(1); }
+		&.spike::after  { transform: rotate(60deg) scale(1); }
+
+		&.flower::before { transform: rotate(45deg) scale(1); }
 	}
 }
 
 @keyframes wiggle {
 	from {
-		transform: rotate(0deg);
+		rotate: 0deg;
 	}
 	16.6% {
-		transform: rotate(10deg);
+		rotate: 10deg;
 	}
 	33.2% {
-		transform: rotate(0deg);
+		rotate: 0deg;
 	}
 	49.8% {
-		transform: rotate(-10deg);
+		rotate: -10deg;
 	}
 	66.4% {
-		transform: rotate(0deg);
+		rotate: 0deg;
 	}
 	83% {
-		transform: rotate(10deg);
+		rotate: 10deg;
 	}
 	to {
-		transform: rotate(0deg);
+		rotate: 0deg;
 	}
 }
 
