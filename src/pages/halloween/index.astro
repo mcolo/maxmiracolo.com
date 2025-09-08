@@ -1,0 +1,103 @@
+---
+import LayoutHalloween from "../../layouts/LayoutHalloween.astro";
+import { movies } from "../../lib/movies";
+
+function getCleanRuntime(runtime: number) {
+  const hours = Math.floor(runtime / 60);
+  const minutes = runtime - (hours * 60);
+
+  return hours + 'hr ' + minutes + 'min';
+}
+
+---
+
+<LayoutHalloween>
+	<Fragment slot="head">
+		<title>Freaky Fridays | Halloween Movie Schedule</title>
+	</Fragment>
+	<Fragment slot="body">
+    <h1>🍿👻🎃</h1>
+    <br />
+    ---
+    <p>Movie night every Friday leading up to Halloween.</p>
+    <p>7:30pm start @ my apartment.</p>
+    <p>Text me to RSVP.</p>
+    <p>
+      <a href="#terms">Terms and Conditions Apply</a>
+    </p>
+    ---
+    <br />
+    <br />
+    <div class="movies">
+      {movies.map((movie) => (
+        <article class="movie">
+          <h2>{movie.showtime_date}</h2>
+          <img class="poster" src={'https://image.tmdb.org/t/p/w400' + movie.poster_path} alt={movie.title} />
+          <h2><a href={'https://imdb.com/title/' + movie.imdb_id} target="_blank" rel="noreferrer noopener external">{movie.title}</a></h2>
+          <p>({movie.release_date.slice(0,4)}) {getCleanRuntime(movie.runtime)}</p>
+        </article>
+      ))}
+    </div>
+    <br />
+    <br />
+    ---
+    <p id="terms">Terms and Conditions</p>
+    <p class="terms">No purchase necessary.</p>
+    <p class="terms">Movies/dates/times/location are all subject to change.</p>
+    <p class="terms">There is no guarantee you will not have nightmares or trouble sleeping.</p>
+    <p class="terms">If you don't enjoy the movie and think it's bad, then that's your problem.</p>
+    <p class="terms">All time commited is non-refundable. You can't unwatch a movie, unless you have a time machine.</p>
+	</Fragment>
+</LayoutHalloween>
+
+<style>
+  body {
+    padding: 1.25rem 2rem;
+    overflow-x: hidden;
+  }
+  
+  .movie {
+    margin: 0 0 2rem;
+    width: 250px;
+    display: inline-block;
+  }
+
+  .poster {
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+  }
+
+  .terms {
+    line-height: 1;
+    margin: .5rem 0;
+    font-size: .8rem;
+    opacity: .6;
+  }
+
+  @media (max-width: 600px) {
+    .movie {
+      width: 150px;
+    }
+
+    .movies {
+      gap: 2rem;
+      justify-content: space-evenly;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+
+    body {
+      padding: 1rem 1rem 8rem;
+    }
+  }
+
+</style>
+

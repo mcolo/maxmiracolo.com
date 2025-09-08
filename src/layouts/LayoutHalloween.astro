@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520898511/portfolio/apple-touch-icon.png?v=PY43Q9Ba9A">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520899195/favicon-32.png?v=PY43Q9Ba9A">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520899195/favicon-16.png?v=PY43Q9Ba9A">
+	<link rel="mask-icon" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520898512/portfolio/safari-pinned-tab.svg?v=PY43Q9Ba9A" color="#020617">
+	<slot name="head" />
+</head>
+<body>
+	<main>
+		<slot name="body" />
+	</main>
+</body>
+</html>
+
+<style is:global>
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
+
+/* End CSS Reset */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: snow;
+    --bg: black;
+    --link: dodgerblue;
+    --link-visited: mediumorchid;
+  }
+
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: black;
+    --bg: snow;
+    --link: blue;
+    --link-visited: purple;
+  }
+}
+
+a { color: var(--link); }
+a:visited { color: var(--link-visited); }
+
+body {
+	font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+</style>
