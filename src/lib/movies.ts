@@ -1,6 +1,6 @@
 export const movies = [
   {
-    "showtime_date": "September 19th",
+    "showtime_date": "2025-09-19T19:30:00-04:00",
     "adult": false,
     "backdrop_path": "/l0JgqFNxeMb1OoHq1CzdYC3Y5J8.jpg",
     "belongs_to_collection": {
@@ -85,7 +85,7 @@ export const movies = [
     "vote_count": 1684
   },
   {
-    "showtime_date": "September 26th",
+    "showtime_date": "2025-09-26T19:30:00-04:00",
     "adult": false,
     "backdrop_path": "/kSeU4uk19t82k6Cao7hc6ktDYhF.jpg",
     "belongs_to_collection": null,
@@ -172,7 +172,7 @@ export const movies = [
     "vote_count": 2836
   },
   {
-    "showtime_date": "October 3rd",
+    "showtime_date": "2025-10-03T19:30:00-04:00",
     "adult": false,
     "backdrop_path": "/4anqXDsl5iZ26qeTRX3yZWylMgY.jpg",
     "belongs_to_collection": {
@@ -236,7 +236,7 @@ export const movies = [
     "vote_count": 596
   },
   {
-    "showtime_date": "October 10th",
+    "showtime_date": "2025-10-10T19:30:00-04:00",
     "adult": false,
     "backdrop_path": "/bizhlTVjifYQUu4Xrdt7m3TYr7d.jpg",
     "belongs_to_collection": null,
@@ -326,7 +326,7 @@ export const movies = [
     "vote_count": 2225
   },
   {
-    "showtime_date": "October 17th",
+    "showtime_date": "2025-10-17T19:30:00-04:00",
     "adult": false,
     "backdrop_path": "/edghRD7vw1XgWEpMLpGt1VSGB5w.jpg",
     "belongs_to_collection": {
@@ -397,7 +397,7 @@ export const movies = [
     "vote_count": 3140
   },
   {
-    "showtime_date": "October 24th",
+    "showtime_date": "2025-10-24T19:30:00-04:00",
     "adult": false,
     "backdrop_path": "/tweDJNQzBGgsWVF5MC8JhSAk07p.jpg",
     "belongs_to_collection": null,
@@ -482,7 +482,7 @@ export const movies = [
     "vote_count": 5967
   },
   {
-    "showtime_date": "October 31st",
+    "showtime_date": "2025-10-31T19:30:00-04:00",
     "adult": false,
     "backdrop_path": "/g9ROrZey0JYp7kf8DoAyZtKnObj.jpg",
     "belongs_to_collection": {

@@ -9,6 +9,28 @@ function getCleanRuntime(runtime: number) {
   return hours + 'hr ' + minutes + 'min';
 }
 
+function getCleanDate(dateString: string) {
+  let d = new Date(dateString);
+  let str = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric'});
+  let suffix = getOrdinalSuffx(d.getDate());
+  return str + suffix;
+
+}
+
+function getOrdinalSuffx(day: number) {
+  if (day > 3 && day < 21) return "th";
+  switch (day % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}
+
 ---
 
 <LayoutHalloween>
@@ -30,8 +52,8 @@ function getCleanRuntime(runtime: number) {
     <br />
     <div class="movies">
       {movies.map((movie) => (
-        <article class="movie">
-          <h2>{movie.showtime_date}</h2>
+        <article class="movie" data-date={movie.showtime_date}>
+          <h2>{getCleanDate(movie.showtime_date)}</h2>
           <img class="poster" src={'https://image.tmdb.org/t/p/w400' + movie.poster_path} alt={movie.title} />
           <h2><a href={'https://imdb.com/title/' + movie.imdb_id} target="_blank" rel="noreferrer noopener external">{movie.title}</a></h2>
           <p>({movie.release_date.slice(0,4)}) {getCleanRuntime(movie.runtime)}</p>
@@ -60,6 +82,7 @@ function getCleanRuntime(runtime: number) {
     margin: 0 0 2rem;
     width: 250px;
     display: inline-block;
+    position: relative;
   }
 
   .poster {
@@ -80,6 +103,20 @@ function getCleanRuntime(runtime: number) {
     opacity: .6;
   }
 
+  .watched .poster {
+    opacity: .2;
+  }
+
+  .watched::after {
+    content: "😱📺";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+  }
+
   @media (max-width: 600px) {
     .movie {
       width: 150px;
@@ -97,7 +134,39 @@ function getCleanRuntime(runtime: number) {
     body {
       padding: 1rem 1rem 8rem;
     }
+
+    .watched::after {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 600px) {
+    .watched::after {
+      font-size: 4.5rem;
+    }
   }
 
 </style>
+
+<script>
+  function isPastDate(dateString: string) {
+    return new Date(dateString) < new Date();
+  }
+
+  function checkDates() {
+    document.querySelectorAll('.movie').forEach((el) => {
+      if (el instanceof HTMLElement === false) {
+        return;
+      }
+      if (!el.dataset.date) {
+        return;
+      }
+      if (isPastDate(el.dataset.date)) {
+        el.classList.add('watched');
+      }
+    })
+  }
+
+  checkDates();
+</script>
 
