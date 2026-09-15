@@ -1,7 +1,7 @@
 ---
 import LayoutHalloween from "../../layouts/LayoutHalloween.astro";
 
-const numSlides = 5;
+const numSlides = 6;
 ---
 <LayoutHalloween>
   <Fragment slot="head">
@@ -15,19 +15,21 @@ const numSlides = 5;
       </section>
       <section class="slide">
         <p class="date">09/25/26</p>
-        <img class="img"  src="https://image.tmdb.org/t/p/w500/x6rHcQFiYcczLQPrmxXPAicm54E.jpg" />
+        <img class="img" src="https://image.tmdb.org/t/p/w500/x6rHcQFiYcczLQPrmxXPAicm54E.jpg" />
       </section>
       <section class="slide">
         <p class="date">10/02/26</p>
-        <img class="img"  src="https://image.tmdb.org/t/p/w500/jxVGW9g30Vo6aWFyhADjwhfjt59.jpg" />
+        <img class="img" src="https://image.tmdb.org/t/p/w500/jxVGW9g30Vo6aWFyhADjwhfjt59.jpg" />
       </section>
       <section class="slide">
         <p class="date">10/09/26</p>
-        <img class="img"  src="https://image.tmdb.org/t/p/w500/6rb24x39vV8n5301IelC8rCPJTH.jpg" />
+        <img class="img" src="https://image.tmdb.org/t/p/w500/6rb24x39vV8n5301IelC8rCPJTH.jpg" />
       </section>
       <section class="slide">
         <p class="date">10/23/26</p>
-        <img class="img"  src="https://image.tmdb.org/t/p/w500/sfsx06TJuwuK3fWUKe4YnjmqLFj.jpg" />
+        <img class="img" src="https://image.tmdb.org/t/p/w500/sfsx06TJuwuK3fWUKe4YnjmqLFj.jpg" />
+      </section>
+      <section class="slide">
       </section>
     </section>
     <div class="dots">
@@ -36,6 +38,7 @@ const numSlides = 5;
       <svg data-idx="2" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
       <svg data-idx="3" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
       <svg data-idx="4" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
+      <svg data-idx="5" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
     </div>
     <button class="btn btn--prev" id="slide-prev">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
@@ -56,46 +59,60 @@ const numSlides = 5;
     color: white; 
     .btn path { stroke: white; }
     .btn--prev { display: none; }
-    .img { border-color: #010101}
+    .img { border-color: #010101; }
     .dots circle { fill: white; }
-    .dots svg:nth-child(1) circle { opacity: 1;}
+    .dots svg:nth-child(1) circle { opacity: 1; }
   }
 
   body[data-idx="1"] { 
     background-color: #190F17;
     color: #f3190f;
     .btn path { stroke: #f3190f; }
-    .img { border-color: transparent}
+    .img { border-color: transparent; }
     .dots circle { fill: #f3190f; }
-    .dots svg:nth-child(2) circle { opacity: 1;}
+    .dots svg:nth-child(2) circle { opacity: 1; }
   }
 
   body[data-idx="2"] { 
     background-color: #EAD647;
     color: black;
     .btn path { stroke: black; }
-    .img { border-color: black}
+    .img { border-color: black; }
     .dots circle { fill: #EAD647; }
-    .dots svg:nth-child(3) circle { opacity: 1;}
+    .dots svg:nth-child(3) circle { opacity: 1; }
   }
 
   body[data-idx="3"] { 
     background-color: #03ECE6; 
     color: black; 
     .btn path { stroke: black; }
-    .img { border-color: black}
+    .img { border-color: black; }
     .dots circle { fill: #03ECE6; }
-    .dots svg:nth-child(4) circle { opacity: 1;}
+    .dots svg:nth-child(4) circle { opacity: 1; }
   }
 
   body[data-idx="4"] { 
     background-color: #15110D; 
     color: #D1360D; 
     .btn path { stroke: #D1360D; }
-    .btn--next { display: none; }
-    .img { border-color: transparent}
+    .img { border-color: transparent; }
     .dots circle { fill: #D1360D; }
-    .dots svg:nth-child(5) circle { opacity: 1;}
+    .dots svg:nth-child(5) circle { opacity: 1; }
+  }
+  
+  body[data-idx="5"] {
+    background: url('../../assets/halloween/face.jpg') no-repeat #030303;
+    background-position: center;
+    background-size: 100%;
+    animation: jumpscare 200ms forwards;
+    .btn path { stroke: transparent; }
+    .img { border-color: transparent; }
+    .dots circle { fill: transparent; }
+  }
+
+  @keyframes jumpscare {
+    from { background-size: 100%; }
+    to { background-size: 150%; }
   }
 
   body {
@@ -248,6 +265,10 @@ const numSlides = 5;
 
     el.style.translate = `${x}px`;
     document.body.dataset.idx = `${newVal}`;
+
+    if (newVal === 5) {
+      setTimeout(() => goToSlide(4), 400);
+    }
   }
 
   function addButtonListeners() {
@@ -318,6 +339,10 @@ const numSlides = 5;
     if (!el) return;
     el.style.translate = `${x}px`;
     document.body.dataset.idx = `${idx}`;
+
+    if (idx === 5) {
+      setTimeout(() => goToSlide(4), 400);
+    }
   }
 
   function handleDotClick(e: Event) {
