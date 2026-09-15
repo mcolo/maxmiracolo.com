@@ -1,0 +1,195 @@
+---
+import LayoutHalloween from "../../layouts/LayoutHalloween.astro";
+import { movies } from "../../lib/movies";
+
+function getCleanRuntime(runtime: number) {
+  const hours = Math.floor(runtime / 60);
+  const minutes = runtime - (hours * 60);
+
+  return hours + 'hr ' + minutes + 'min';
+}
+
+function getCleanDate(dateString: string) {
+  let d = new Date(dateString);
+  let str = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric'});
+  let suffix = getOrdinalSuffx(d.getDate());
+  return str + suffix;
+
+}
+
+function getOrdinalSuffx(day: number) {
+  if (day > 3 && day < 21) return "th";
+  switch (day % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}
+
+---
+
+<LayoutHalloween>
+	<Fragment slot="head">
+		<title>Freaky Fridays | Halloween Movie Schedule</title>
+	</Fragment>
+	<Fragment slot="body">
+    <section class="backdrop">
+      <div class="logo">
+        <span class="letter">F</span>
+        <span class="letter">r</span>
+        <span class="letter">e</span>
+        <span class="letter">A</span>
+        <span class="letter">K</span>
+        <span class="letter">Y</span>
+        <span class="letter">F</span>
+        <span class="letter">r</span>
+        <span class="letter">i</span>
+        <span class="letter">d</span>
+        <span class="letter">A</span>
+        <span class="letter">Y</span>
+      </div>
+    </section>
+    <!-- <a href="about:blank">blank</a> -->
+	</Fragment>
+</LayoutHalloween>
+
+<style>
+  body {
+    padding: 1.25rem 2rem;
+    overflow-x: hidden;
+    background: url('../../assets/halloween/old-wall.png') repeat fixed;
+    background-color: #000;
+    animation: bloodpool 5s infinite alternate;
+    font-family: var(--syne-mono);
+    text-shadow: 0 0 3px currentColor;
+  }
+
+  @keyframes bloodpool {
+    from { background-color: #000; }
+    to { background-color: #370000; }
+  }
+
+  :global(nav) {
+    display: flex;
+    gap: 0.5rem;
+    color: white;
+  }
+
+  :global(a) {
+    color: red;
+  }
+
+  .logo {
+    color: #fff;
+  }
+
+  .logo .letter {
+    display: inline-block;
+    transition: 300ms ease;
+    text-shadow: 0 0 10px #fff;
+  }
+
+  /* .logo .letter:nth-child(1) { rotate: -15deg; translate: 0 10px; }
+  .logo .letter:nth-child(2) { rotate: 15deg; translate: 0 -5px; }
+  .logo .letter:nth-child(3) { rotate: 0deg; translate: -2px 2px; }
+  .logo .letter:nth-child(4) { rotate: -5deg; translate: 3px 0; }
+  .logo .letter:nth-child(5) { rotate: -15deg; translate: -3px -2px; }
+  .logo .letter:nth-child(6) { rotate: 25deg; translate: 0 6px; }
+  .logo .letter:nth-child(7) { rotate: -15deg; translate: 6px -2px;  }
+  .logo .letter:nth-child(8) { rotate: 0deg; translate: 7px 0;  }
+  .logo .letter:nth-child(9) { rotate: -5deg; translate: 2px 1px;  }
+  .logo .letter:nth-child(10) { rotate: 15deg; translate: 0 0;  }
+  .logo .letter:nth-child(11) { rotate: 5deg; translate: -4px -6px;  }
+  .logo .letter:nth-child(12) { rotate: -10deg; translate: 4px 2px;  }
+
+  @media (hover: hover) {
+    .logo:hover .letter:nth-child(1) { transition-delay: 300ms; }
+    .logo:hover .letter:nth-child(2) { transition-delay: 25ms; }
+    .logo:hover .letter:nth-child(3) { transition-delay: 45ms; }
+    .logo:hover .letter:nth-child(4) { transition-delay: 150ms; }
+    .logo:hover .letter:nth-child(5) { transition-delay: 180ms; }
+    .logo:hover .letter:nth-child(6) { transition-delay: 50ms; }
+    .logo:hover .letter:nth-child(7) { transition-delay: 0ms; }
+    .logo:hover .letter:nth-child(8) { transition-delay: 100ms; }
+    .logo:hover .letter:nth-child(9) { transition-delay: 170ms; }
+    .logo:hover .letter:nth-child(10) { transition-delay: 475ms; }
+    .logo:hover .letter:nth-child(11) { transition-delay: 20ms; }
+    .logo:hover .letter:nth-child(12) { transition-delay: 225ms; }
+    
+    .logo:hover .letter {
+      transition: 30ms;
+      rotate: 0deg;
+      translate: 0;
+    }
+  } */
+
+  .logo .letter:nth-child(1) { --r: -15deg; --t: 0 0px; animation-delay: 2800ms; }
+  .logo .letter:nth-child(2) { --r: 15deg; --t: 0 -5px; animation-delay: 1525ms; }
+  .logo .letter:nth-child(3) { --r: 0deg; --t: -2px 2px; animation-delay: 1545ms; }
+  .logo .letter:nth-child(4) { --r: -5deg; --t: 3px 0; animation-delay: 1650ms; }
+  .logo .letter:nth-child(5) { --r: -15deg; --t: -3px -2px; animation-delay: 1680ms; }
+  .logo .letter:nth-child(6) { --r: 25deg; --t: 0 6px; animation-delay: 1950ms; }
+  .logo .letter:nth-child(7) { --r: -15deg; --t: 6px -2px; animation-delay: 1500ms;  }
+  .logo .letter:nth-child(8) { --r: 0deg; --t: 7px 0; animation-delay: 1600ms; }
+  .logo .letter:nth-child(9) { --r: -5deg; --t: 2px 1px; animation-delay: 2670ms; }
+  .logo .letter:nth-child(10) { --r: 15deg; --t: 0 0; animation-delay: 4075ms; }
+  .logo .letter:nth-child(11) { --r: 5deg; --t: -4px -6px; animation-delay: 1520ms; }
+  .logo .letter:nth-child(12) { --r: -10deg; --t: 4px 2px; animation-delay: 1725ms; }
+
+  .logo .letter {
+    animation: arrange 30ms forwards;
+  }
+
+  @keyframes arrange {
+    to {
+      rotate: var(--r);
+      translate: var(--t)
+    }
+  }
+
+  @media (min-width: 600px) {
+    .logo {
+      font-size: 4rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .logo {
+      font-size: 2.5rem;
+    }
+  }
+
+</style>
+
+<script>
+  function isPastDate(dateString: string) {
+    return new Date(dateString) < new Date();
+  }
+
+  function checkDates() {
+    document.querySelectorAll('.movie').forEach((el) => {
+      if (el instanceof HTMLElement === false) {
+        return;
+      }
+      if (!el.dataset.date) {
+        return;
+      }
+      if (isPastDate(el.dataset.date)) {
+        el.classList.add('watched');
+      }
+    })
+  }
+
+  checkDates();
+</script>
+
