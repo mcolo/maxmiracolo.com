@@ -1,9 +1,10 @@
 ---
-import { getAllPosts } from '../lib/client';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-const data = await getAllPosts();
-const allPosts = data.publication.posts.edges;
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 ---
 
 <Layout>
@@ -18,11 +19,11 @@ const allPosts = data.publication.posts.edges;
 		<h3 class="posts-heading">Recent Writings</h3>
 		{allPosts.map((post) => (
 			<article class="post">
-				<h4 class="post-title">{post.node.title}</h4>
-				<p class="post-brief">{post.node.brief}</p>
+				<h4 class="post-title">{post.data.title}</h4>
+				<p class="post-brief">{post.data.description}</p>
 				<div class="post-details">
-					<span class="read-time">{post.node.readTimeInMinutes} min read</span>
-					<a class="post-link" rel="external me" href={`https://mcolo.hashnode.dev/${post.node.slug}`}>Read More &#8594;</a>
+					<span class="read-time">{post.data.readTime}</span>
+					<a class="post-link" rel="external me" href={`/blog/${post.id}`}>Read More &#8594;</a>
 				</div>
 			</article>
 		))}
