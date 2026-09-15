@@ -1,11 +1,13 @@
 ---
 import LayoutHalloween from "../../layouts/LayoutHalloween.astro";
+import faceImg from '../../assets/halloween/face.jpg';
 
 const numSlides = 6;
 ---
 <LayoutHalloween>
   <Fragment slot="head">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="preload" as="image" href={faceImg.src} />
   </Fragment>
   <Fragment slot="body">
     <section class="slides" id="slides" data-idx="0" data-total={numSlides}>
@@ -53,7 +55,7 @@ const numSlides = 6;
   </Fragment>
 </LayoutHalloween>
 
-<style>
+<style define:vars={{ faceImg: `url(${faceImg.src})` }}>
   body[data-idx="0"] { 
     background-color: #CF1A05;
     color: white; 
@@ -101,7 +103,9 @@ const numSlides = 6;
   }
   
   body[data-idx="5"] {
-    background: url('../../assets/halloween/face.jpg') no-repeat #030303;
+    background-color: #030303;
+    background-image: var(--faceImg);
+    background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
     animation: jumpscare 200ms forwards;
