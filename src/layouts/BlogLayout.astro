@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520898511/portfolio/apple-touch-icon.png?v=PY43Q9Ba9A">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520899195/favicon-32.png?v=PY43Q9Ba9A">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520899195/favicon-16.png?v=PY43Q9Ba9A">
+	<link rel="mask-icon" href="https://res.cloudinary.com/ddkucvkg0/image/upload/v1520898512/portfolio/safari-pinned-tab.svg?v=PY43Q9Ba9A" color="#020617">
+	<slot name="head" />
+</head>
+<body>
+	<nav>
+		<a href="/">&#8592; Back</a>
+	</nav>
+	<main>
+		<slot name="body" />
+	</main>
+</body>
+</html>
+
+<style is:global>
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+#root, #__next {
+  isolation: isolate;
+}
+
+/* End CSS Reset */
+
+:root {
+	--slate950: #020617;
+	--slate900: #0f172a;
+	--slate800:	#1e293b;
+	--slate400: #94a3b8;
+	--link: #3b82f6;
+	--linkhover: #ec4899;
+	--text: whitesmoke;
+}
+
+h1,h2,h3,h4,p {
+	color: var(--text);
+}
+
+a {
+	transition: 200ms;
+  color: var(--link);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+body {
+	background-color: var(--slate950);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+}
+
+nav {
+	margin: 2rem 0 1rem;
+  position: sticky;
+  top: 0;
+  background-color: var(--slate950);
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+main {
+	margin-bottom: 12rem;
+}
+
+hr {
+  opacity: .25;
+  margin: 2rem;
+}
+
+::marker {
+  color: white;
+}
+
+@media (min-width: 42rem) {
+	nav,
+	main {
+		width: 50rem;
+		padding: 1rem;
+	}
+}
+
+@media (max-width: 42rem) {
+	nav,
+	main {
+		width: 100%;
+		padding: 1rem 1.5rem;
+	}
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: var(--linkhover);
+    text-underline-offset: 4px;
+  }
+
+}
+</style>
