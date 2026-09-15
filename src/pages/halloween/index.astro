@@ -1,172 +1,344 @@
 ---
 import LayoutHalloween from "../../layouts/LayoutHalloween.astro";
-import { movies } from "../../lib/movies";
 
-function getCleanRuntime(runtime: number) {
-  const hours = Math.floor(runtime / 60);
-  const minutes = runtime - (hours * 60);
-
-  return hours + 'hr ' + minutes + 'min';
-}
-
-function getCleanDate(dateString: string) {
-  let d = new Date(dateString);
-  let str = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric'});
-  let suffix = getOrdinalSuffx(d.getDate());
-  return str + suffix;
-
-}
-
-function getOrdinalSuffx(day: number) {
-  if (day > 3 && day < 21) return "th";
-  switch (day % 10) {
-    case 1:
-      return "st";
-    case 2:
-      return "nd";
-    case 3:
-      return "rd";
-    default:
-      return "th";
-  }
-}
-
+const numSlides = 5;
 ---
-
 <LayoutHalloween>
-	<Fragment slot="head">
-		<title>Freaky Fridays | Halloween Movie Schedule</title>
-	</Fragment>
-	<Fragment slot="body">
-    <h1>🍿👻🎃</h1>
-    <br />
-    ---
-    <p>Movie night every Friday leading up to Halloween.</p>
-    <p>7:30pm start @ my apartment.</p>
-    <p>Text me to RSVP.</p>
-    <p>
-      <a href="#terms">Terms and Conditions Apply</a>
-    </p>
-    ---
-    <br />
-    <br />
-    <div class="movies">
-      {movies.map((movie) => (
-        <article class="movie" data-date={movie.showtime_date}>
-          <h2>{getCleanDate(movie.showtime_date)}</h2>
-          <img class="poster" src={'https://image.tmdb.org/t/p/w400' + movie.poster_path} alt={movie.title} />
-          <h2><a href={'https://imdb.com/title/' + movie.imdb_id} target="_blank" rel="noreferrer noopener external">{movie.title}</a></h2>
-          <p>({movie.release_date.slice(0,4)}) {getCleanRuntime(movie.runtime)}</p>
-        </article>
-      ))}
+  <Fragment slot="head">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  </Fragment>
+  <Fragment slot="body">
+    <section class="slides" id="slides" data-idx="0" data-total={numSlides}>
+      <section class="slide">
+        <p class="date">09/18/26</p>
+        <img class="img" src="https://image.tmdb.org/t/p/original/nH1lvyQvfbL5GKScTtT6zkIvDEn.jpg" width="300" height="450" />
+      </section>
+      <section class="slide">
+        <p class="date">09/25/26</p>
+        <img class="img"  src="https://image.tmdb.org/t/p/original/x6rHcQFiYcczLQPrmxXPAicm54E.jpg" width="300" height="450" />
+      </section>
+      <section class="slide">
+        <p class="date">10/02/26</p>
+        <img class="img"  src="https://image.tmdb.org/t/p/original/jxVGW9g30Vo6aWFyhADjwhfjt59.jpg" width="300" height="450" />
+      </section>
+      <section class="slide">
+        <p class="date">10/09/26</p>
+        <img class="img"  src="https://image.tmdb.org/t/p/original/6rb24x39vV8n5301IelC8rCPJTH.jpg" width="300" height="450" />
+      </section>
+      <section class="slide">
+        <p class="date">10/23/26</p>
+        <img class="img"  src="https://image.tmdb.org/t/p/original/sfsx06TJuwuK3fWUKe4YnjmqLFj.jpg" width="300" height="450" />
+      </section>
+    </section>
+    <div class="dots">
+      <svg data-idx="0" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
+      <svg data-idx="1" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
+      <svg data-idx="2" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
+      <svg data-idx="3" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
+      <svg data-idx="4" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
     </div>
-    <br />
-    <br />
-    ---
-    <p id="terms">Terms and Conditions</p>
-    <p class="terms">No purchase necessary.</p>
-    <p class="terms">Movies/dates/times/location are all subject to change.</p>
-    <p class="terms">There is no guarantee you will not have nightmares or trouble sleeping.</p>
-    <p class="terms">If you don't enjoy the movie and think it's bad, then that's your problem.</p>
-    <p class="terms">All time commited is non-refundable. You can't unwatch a movie, unless you have a time machine.</p>
-	</Fragment>
+    <button class="btn btn--prev" id="slide-prev">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+        <path d="M15 6l-6 6l6 6" />
+      </svg>
+    </button>
+    <button class="btn btn--next" id="slide-next">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
+        <path d="M9 6l6 6l-6 6" />
+      </svg>
+    </button>
+  </Fragment>
 </LayoutHalloween>
 
 <style>
-  body {
-    padding: 1.25rem 2rem;
-    overflow-x: hidden;
-  }
-  
-  .movie {
-    margin: 0 0 2rem;
-    width: 250px;
-    display: inline-block;
-    position: relative;
+  body[data-idx="0"] { 
+    background-color: #CF1A05;
+    color: white; 
+    .btn path { stroke: white; }
+    .btn--prev { display: none; }
+    .img { border-color: #010101}
+    .dots circle { fill: white; }
+    .dots svg:nth-child(1) circle { opacity: 1;}
   }
 
-  .poster {
-    user-select: none;
+  body[data-idx="1"] { 
+    background-color: #190F17;
+    color: #f3190f;
+    .btn path { stroke: #f3190f; }
+    .img { border-color: transparent}
+    .dots circle { fill: #f3190f; }
+    .dots svg:nth-child(2) circle { opacity: 1;}
+  }
+
+  body[data-idx="2"] { 
+    background-color: #EAD647;
+    color: black;
+    .btn path { stroke: black; }
+    .img { border-color: black}
+    .dots circle { fill: #EAD647; }
+    .dots svg:nth-child(3) circle { opacity: 1;}
+  }
+
+  body[data-idx="3"] { 
+    background-color: #03ECE6; 
+    color: black; 
+    .btn path { stroke: black; }
+    .img { border-color: black}
+    .dots circle { fill: #03ECE6; }
+    .dots svg:nth-child(4) circle { opacity: 1;}
+  }
+
+  body[data-idx="4"] { 
+    background-color: #15110D; 
+    color: #D1360D; 
+    .btn path { stroke: #D1360D; }
+    .btn--next { display: none; }
+    .img { border-color: transparent}
+    .dots circle { fill: #D1360D; }
+    .dots svg:nth-child(5) circle { opacity: 1;}
+  }
+
+  body {
+    transition: background-color 120ms ease;
+    width: 100svw;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  :global(main),
+  .slides {
+    width: 100%;
+    height: 100%;
+    transition: 120ms ease;
+    will-change: translate;
+    display: flex;
+  }
+
+  .slide {
+    flex: 0 0 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .date {
+    font-family: var(--rubik);
+    font-size: 2rem;
+  }
+
+  .img {
+    border-style: solid;
     pointer-events: none;
   }
 
-  .movies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3rem;
-  }
-
-  .terms {
-    line-height: 1;
-    margin: .5rem 0;
-    font-size: .8rem;
-    opacity: .6;
-  }
-
-  .watched .poster {
-    opacity: .2;
-  }
-
-  .watched::after {
-    content: "😱📺";
+  .btn {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    background: none;
+    border: none;
+    border-radius: 3rem;
+    width: 3rem;
+    height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none;
   }
 
-  @media (max-width: 600px) {
-    .movie {
-      width: 150px;
-    }
+  .dots {
+    display: flex;
+    gap: .375rem;
+    position: absolute;
+    left: 50%;
+    translate: -50%;
+    padding: .25rem .5rem;
+    border-radius: 3rem;
+    background-color: #0101017a;
+  }
 
-    .movies {
-      gap: 2rem;
-      justify-content: space-evenly;
-    }
-
-    h2 {
-      font-size: 1rem;
-    }
-
-    body {
-      padding: 1rem 1rem 8rem;
-    }
-
-    .watched::after {
-      font-size: 3rem;
-    }
+  .dots svg {
+    width: .6rem;
+    height: .6rem;
+  }
+  
+  .dots circle {
+    opacity: .25;
   }
 
   @media (min-width: 600px) {
-    .watched::after {
-      font-size: 4.5rem;
+    .img {
+      width: 460px;
+      height: 690px;
+      border-width: 10px;
+    }
+    .dots {
+      top: calc(50% + 390px);
+    }
+    .btn--next {
+      left: calc(50% + 230px);
+    }
+
+    .btn--prev {
+      right: calc(50% + 230px);
     }
   }
 
+  @media (max-width: 600px) and (min-width: 375px) {
+    .img {
+      width: 300px;
+      height: 450px;
+      border-width: 7px;
+    }
+    .dots {
+      top: calc(50% + 265px);
+    }
+    .btn--next {
+      left: calc(50% + 150px);
+    }
+
+    .btn--prev {
+      right: calc(50% + 150px);
+   }
+  }
+
+  @media (max-width: 375px) {
+    .img {
+      width: 200px;
+      height: 300px;
+      border-width: 5px;
+      
+    }
+    .dots {
+      top: calc(50% + 190px);
+    }
+    .btn--next {
+      left: calc(50% + 100px);
+    }
+
+    .btn--prev {
+      right: calc(50% + 100px);
+   }
+  }
 </style>
 
 <script>
-  function isPastDate(dateString: string) {
-    return new Date(dateString) < new Date();
+  function handleSlideChange(delta: number) {
+    const el = document.getElementById('slides');
+    if (!el) return;
+    const slides = el.dataset.total;
+    const idx = document.body.dataset.idx;
+    if (!slides || !idx) return;
+    const idxNum = parseInt(idx);
+    const slidesNum = parseInt(slides);
+    let newVal;
+
+    if (delta === -1 && idxNum > 0) {
+      newVal = idxNum - 1;
+    } else if (delta === 1 && idxNum < slidesNum - 1 ) {
+      newVal = idxNum + 1;
+    } else {
+      return;
+    }
+
+    const w = document.body.clientWidth;
+    const nextIdx = idxNum + delta;
+    const x = w * -1 * nextIdx;
+
+    el.style.translate = `${x}px`;
+    document.body.dataset.idx = `${newVal}`;
   }
 
-  function checkDates() {
-    document.querySelectorAll('.movie').forEach((el) => {
-      if (el instanceof HTMLElement === false) {
-        return;
-      }
-      if (!el.dataset.date) {
-        return;
-      }
-      if (isPastDate(el.dataset.date)) {
-        el.classList.add('watched');
-      }
+  function addButtonListeners() {
+    document.getElementById('slide-prev')?.addEventListener('click', () => handleSlideChange(-1));
+    document.getElementById('slide-next')?.addEventListener('click', () => handleSlideChange(1));
+  }
+
+  let touchstartX = 0;
+  let touchendX = 0;
+  let touchstartY = 0;
+  let touchendY = 0;
+
+  function checkDirection() {
+    const deltaY = touchendY-touchstartY;
+    const deltaX = touchendX-touchstartX;
+    console.log(`delta ${deltaX} ${deltaY}`)
+    if (Math.abs(deltaY) >= Math.abs(deltaX)) return;
+    if (Math.abs(deltaX) < 50) return;
+    if (touchendX < touchstartX) handleSlideChange(1);
+    if (touchendX > touchstartX) handleSlideChange(-1);
+  }
+
+  function addSwipeListeners() {
+    document.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+      touchstartY = e.changedTouches[0].screenY
+    });
+  
+    document.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      touchendY = e.changedTouches[0].screenY
+      checkDirection()
+    });
+  }
+
+  function addResizeObserver() {
+    let rafId: null | number = null;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (rafId) cancelAnimationFrame(rafId);
+
+      rafId = requestAnimationFrame(() => {
+        for (const entry of entries) {
+          if (entry.borderBoxSize.length > 0) {
+            const idx = document.body.dataset.idx;
+            if (!idx) return;
+            const idxNum = parseInt(idx);
+
+            const w = document.body.clientWidth;
+            const x = w * -1 * idxNum;
+            const el = document.getElementById('slides');
+            if (!el) return;
+            el.style.translate = `${x}px`;
+          }
+        }
+        rafId = null;
+      });
+
+    });
+
+    resizeObserver.observe(document.body);
+  }
+
+  function goToSlide(idx: number) {
+    const w = document.body.clientWidth;
+    const x = w * -1 * idx;
+    const el = document.getElementById('slides');
+    if (!el) return;
+    el.style.translate = `${x}px`;
+    document.body.dataset.idx = `${idx}`;
+  }
+
+  function handleDotClick(e: Event) {
+    const el = e.target as SVGElement;
+    if (!el) return;
+    const idx = el.parentElement?.dataset.idx;
+    if (!idx) return;
+    goToSlide(parseInt(idx));
+  }
+
+  function addDotListeners() {
+    document.querySelectorAll('.dot').forEach((el) => {
+      el.addEventListener('click', handleDotClick);
     })
   }
 
-  checkDates();
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.dataset.idx = '0';
+    addButtonListeners();
+    addSwipeListeners();
+    addResizeObserver();
+    addDotListeners();
+  })
 </script>
-
