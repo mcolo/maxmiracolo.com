@@ -22,7 +22,7 @@ const allPosts = (await getCollection('blog')).sort(
 				<h4 class="post-title">{post.data.title}</h4>
 				<p class="post-brief">{post.data.description}</p>
 				<div class="post-details">
-					<span class="read-time">{post.data.readTime} min read</span>
+					<span class="read-time">{post.data.readTime}</span>
 					<a class="post-link" rel="external me" href={`/blog/${post.id}`}>Read More &#8594;</a>
 				</div>
 			</article>
