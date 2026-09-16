@@ -104,23 +104,26 @@ const numSlides = 6;
   
   body[data-idx="5"] {
     background-color: #030303;
-    background-image: var(--faceImg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-    animation: jumpscare 200ms forwards;
+    .slide {
+      background-image: var(--faceImg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 50%;
+      animation: jumpscare 200ms forwards;
+    }
+    .dots { background: transparent; }
     .btn path { stroke: transparent; }
     .img { border-color: transparent; }
     .dots circle { fill: transparent; }
   }
 
   @keyframes jumpscare {
-    from { background-size: 100%; }
-    to { background-size: 150%; }
+    from { background-size: 50%; }
+    to { background-size: 100%; }
   }
 
   body {
-    transition: background-color 120ms ease;
+    transition: background-color 200ms ease;
     width: 100svw;
     height: 100svh;
     overflow: hidden;
@@ -130,7 +133,7 @@ const numSlides = 6;
   .slides {
     width: 100%;
     height: 100%;
-    transition: 120ms ease;
+    transition: 200ms ease;
     will-change: translate;
     display: flex;
   }
@@ -241,6 +244,15 @@ const numSlides = 6;
     .btn--prev {
       right: calc(50% + 100px);
    }
+  }
+
+  @media (hover: none) {
+    .btn {
+      touch-action: none;
+    }
+    .date {
+      pointer-events: none;
+    }
   }
 </style>
 
