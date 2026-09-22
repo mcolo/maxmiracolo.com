@@ -146,6 +146,10 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
     stroke: var(--slide-color);
   }
 
+  .btn[hidden] {
+    display: none;
+  }
+
   .btn--next {
     left: calc(50% + (var(--img-w) / 2));
   }
