@@ -81,8 +81,18 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
   }
 
   :global(main) {
-    --img-w: min(300px, 90vw, calc((100svh - 9rem) * 2 / 3));
     --img-h: calc(var(--img-w) * 3 / 2);
+  }
+
+  @media (max-aspect-ratio: 1/1) {
+    :global(main) {
+      --img-w: clamp(250px, calc(50vw * (100vw/100vh)), 600px);
+    }
+  }
+  @media (min-aspect-ratio: 1/1) {
+    :global(main) {
+      --img-w: clamp(250px, calc(50vw * (100vh/100vw)), 600px);
+    }
   }
 
   .slides.no-transition {
@@ -190,6 +200,12 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
     }
     .date {
       pointer-events: none;
+    }
+  }
+
+  @media (max-height: 400px) {
+    .img {
+      border: none;
     }
   }
 </style>
