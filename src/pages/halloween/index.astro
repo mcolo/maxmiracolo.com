@@ -80,6 +80,11 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
     transition: 200ms ease;
   }
 
+  :global(main) {
+    --img-w: min(460px, 90vw, calc((100svh - 9rem) * 2 / 3));
+    --img-h: calc(var(--img-w) * 3 / 2);
+  }
+
   .slides.no-transition {
     transition: none;
   }
@@ -116,7 +121,10 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
   }
 
   .img {
+    width: var(--img-w);
+    height: var(--img-h);
     border-style: solid;
+    border-width: clamp(5px, 1.5vw, 10px);
     border-color: var(--border-color);
     pointer-events: none;
   }
@@ -138,6 +146,14 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
     stroke: var(--slide-color);
   }
 
+  .btn--next {
+    left: calc(50% + (var(--img-w) / 2));
+  }
+
+  .btn--prev {
+    right: calc(50% + (var(--img-w) / 2));
+  }
+
   .dots {
     display: flex;
     gap: .375rem;
@@ -147,6 +163,7 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
     padding: .25rem .5rem;
     border-radius: 3rem;
     background-color: #0101017a;
+    top: calc(50% + (var(--img-h) / 2) + 2.75rem);
   }
 
   .dots svg {
@@ -161,60 +178,6 @@ const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare
 
   .dot.active circle {
     opacity: 1;
-  }
-
-  @media (min-width: 600px) {
-    .img {
-      width: 460px;
-      height: 690px;
-      border-width: 10px;
-    }
-    .dots {
-      top: calc(50% + 390px);
-    }
-    .btn--next {
-      left: calc(50% + 230px);
-    }
-
-    .btn--prev {
-      right: calc(50% + 230px);
-    }
-  }
-
-  @media (max-width: 600px) and (min-width: 375px) {
-    .img {
-      width: 300px;
-      height: 450px;
-      border-width: 7px;
-    }
-    .dots {
-      top: calc(50% + 265px);
-    }
-    .btn--next {
-      left: calc(50% + 150px);
-    }
-
-    .btn--prev {
-      right: calc(50% + 150px);
-   }
-  }
-
-  @media (max-width: 375px) {
-    .img {
-      width: 200px;
-      height: 300px;
-      border-width: 5px;
-    }
-    .dots {
-      top: calc(50% + 190px);
-    }
-    .btn--next {
-      left: calc(50% + 100px);
-    }
-
-    .btn--prev {
-      right: calc(50% + 100px);
-   }
   }
 
   @media (hover: none) {
