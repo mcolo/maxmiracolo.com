@@ -1,5 +1,11 @@
 ---
 import { Font } from "astro:assets";
+
+interface Props {
+  bodyStyle?: string;
+}
+
+const { bodyStyle } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -14,7 +20,7 @@ import { Font } from "astro:assets";
 	<slot name="head" />
   <Font cssVariable="--rubik" />
 </head>
-<body>
+<body style={bodyStyle}>
 	<main>
 		<slot name="body" />
 	</main>

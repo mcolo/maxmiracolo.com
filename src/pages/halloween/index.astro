@@ -2,9 +2,25 @@
 import LayoutHalloween from "../../layouts/LayoutHalloween.astro";
 import faceImg from '../../assets/halloween/face.jpg';
 
-const numSlides = 6;
+const slides = [
+  { date: '09-18-2026', display: '09/18/26', img: 'https://image.tmdb.org/t/p/w500/nH1lvyQvfbL5GKScTtT6zkIvDEn.jpg', color: 'white', dotColor: 'white', borderColor: '#010101', bg: '#CF1A05' },
+  { date: '09/25/2026', display: '09/25/26 - virtual', img: 'https://image.tmdb.org/t/p/w500/jxVGW9g30Vo6aWFyhADjwhfjt59.jpg', color: 'black', dotColor: '#EAD647', borderColor: 'black', bg: '#EAD647' },
+  { date: '10-02-2026', display: '10/02/26', img: 'https://image.tmdb.org/t/p/w500/x6rHcQFiYcczLQPrmxXPAicm54E.jpg', color: '#f3190f', dotColor: '#f3190f', borderColor: 'transparent', bg: '#190F17' },
+  { date: '10-09-2026', display: '10/09/26', img: 'https://image.tmdb.org/t/p/w500/sfsx06TJuwuK3fWUKe4YnjmqLFj.jpg', color: '#D1360D', dotColor: '#D1360D', borderColor: 'transparent', bg: '#15110D' },
+  { date: '10-23-2026', display: '10/23/26', img: 'https://image.tmdb.org/t/p/w500/6rb24x39vV8n5301IelC8rCPJTH.jpg', color: 'black', dotColor: '#03ECE6', borderColor: 'black', bg: '#03ECE6' },
+  { isJumpscare: true, color: 'inherit', dotColor: 'transparent', borderColor: 'transparent', bg: '#030303' },
+];
+
+const today = new Date();
+let idx = slides.findIndex((s) => s.date && today.getTime() <= new Date(s.date).getTime() + 86400000);
+if (idx === -1) idx = slides.length - 2;
+
+const current = slides[idx];
+const bodyStyle = `--bg:${current.bg};--slide-color:${current.color};--dot-color:${current.dotColor};--border-color:${current.borderColor}`;
+
+const clientSlides = slides.map(({ color, dotColor, borderColor, bg, isJumpscare }) => ({ color, dotColor, borderColor, bg, isJumpscare: !!isJumpscare }));
 ---
-<LayoutHalloween>
+<LayoutHalloween bodyStyle={bodyStyle}>
   <Fragment slot="head">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="preload" as="image" href={faceImg.src} />
@@ -13,39 +29,20 @@ const numSlides = 6;
     <meta property="og:image" content="https://maxmiracolo.com/ff.png" />
   </Fragment>
   <Fragment slot="body">
-    <section class="slides" id="slides" data-idx="0" data-total={numSlides}>
-      <section class="slide">
-        <p class="date">09/18/26</p>
-        <img class="img" src="https://image.tmdb.org/t/p/w500/nH1lvyQvfbL5GKScTtT6zkIvDEn.jpg" />
-      </section>
-      <section class="slide">
-        <p class="date">09/25/26</p>
-        <img class="img" src="https://image.tmdb.org/t/p/w500/x6rHcQFiYcczLQPrmxXPAicm54E.jpg" />
-      </section>
-      <section class="slide">
-        <p class="date">10/02/26</p>
-        <img class="img" src="https://image.tmdb.org/t/p/w500/jxVGW9g30Vo6aWFyhADjwhfjt59.jpg" />
-      </section>
-      <section class="slide">
-        <p class="date">10/09/26</p>
-        <img class="img" src="https://image.tmdb.org/t/p/w500/6rb24x39vV8n5301IelC8rCPJTH.jpg" />
-      </section>
-      <section class="slide">
-        <p class="date">10/23/26</p>
-        <img class="img" src="https://image.tmdb.org/t/p/w500/sfsx06TJuwuK3fWUKe4YnjmqLFj.jpg" />
-      </section>
-      <section class="slide">
-      </section>
+    <section class="slides" id="slides" data-idx={idx} style={`translate: ${idx * -100}vw`}>
+      {slides.map((slide) => (
+        <section class="slide">
+          {!slide.isJumpscare && <p class="date">{slide.display}</p>}
+          {!slide.isJumpscare && <img class="img" src={slide.img} />}
+        </section>
+      ))}
     </section>
     <div class="dots">
-      <svg data-idx="0" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
-      <svg data-idx="1" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
-      <svg data-idx="2" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
-      <svg data-idx="3" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
-      <svg data-idx="4" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
-      <svg data-idx="5" class="dot" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
+      {slides.slice(0, -1).map((_, i) => (
+        <svg data-idx={i} class:list={['dot', { active: i === idx }]} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle class="circle" cx="50" cy="50" r="50" /></svg>
+      ))}
     </div>
-    <button class="btn btn--prev" id="slide-prev">
+    <button class="btn btn--prev" id="slide-prev" hidden={idx === 0}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
         <path d="M15 6l-6 6l6 6" />
       </svg>
@@ -59,86 +56,32 @@ const numSlides = 6;
 </LayoutHalloween>
 
 <style define:vars={{ faceImg: `url(${faceImg.src})` }}>
-  body[data-idx="0"] { 
-    background-color: #CF1A05;
-    color: white; 
-    .btn path { stroke: white; }
-    .btn--prev { display: none; }
-    .img { border-color: #010101; }
-    .dots circle { fill: white; }
-    .dots svg:nth-child(1) circle { opacity: 1; }
-  }
-
-  body[data-idx="1"] { 
-    background-color: #190F17;
-    color: #f3190f;
-    .btn path { stroke: #f3190f; }
-    .img { border-color: transparent; }
-    .dots circle { fill: #f3190f; }
-    .dots svg:nth-child(2) circle { opacity: 1; }
-  }
-
-  body[data-idx="2"] { 
-    background-color: #EAD647;
-    color: black;
-    .btn path { stroke: black; }
-    .img { border-color: black; }
-    .dots circle { fill: #EAD647; }
-    .dots svg:nth-child(3) circle { opacity: 1; }
-  }
-
-  body[data-idx="3"] { 
-    background-color: #03ECE6; 
-    color: black; 
-    .btn path { stroke: black; }
-    .img { border-color: black; }
-    .dots circle { fill: #03ECE6; }
-    .dots svg:nth-child(4) circle { opacity: 1; }
-  }
-
-  body[data-idx="4"] { 
-    background-color: #15110D; 
-    color: #D1360D; 
-    .btn path { stroke: #D1360D; }
-    .img { border-color: transparent; }
-    .dots circle { fill: #D1360D; }
-    .dots svg:nth-child(5) circle { opacity: 1; }
-  }
-  
-  body[data-idx="5"] {
-    background-color: #030303;
-    .slide {
-      background-image: var(--faceImg);
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 50%;
-      animation: jumpscare 200ms forwards;
-    }
-    .dots { background: transparent; }
-    .btn path { stroke: transparent; }
-    .img { border-color: transparent; }
-    .dots circle { fill: transparent; }
-  }
-
-  @keyframes jumpscare {
-    from { background-size: 50%; }
-    to { background-size: 100%; }
-  }
-
   body {
-    transition: background-color 200ms ease;
     width: 100svw;
     height: 100svh;
     overflow: hidden;
+    background-color: var(--bg);
+    transition: background-color 200ms ease;
+  }
+
+  body.jumpscare .dots,
+  body.jumpscare .btn {
+    opacity: 0;
+    pointer-events: none;
   }
 
   :global(main),
   .slides {
     width: 100%;
     height: 100%;
-    transition: 200ms ease;
     will-change: translate;
     display: flex;
+    color: var(--slide-color);
+    transition: 200ms ease;
+  }
+
+  .slides.no-transition {
+    transition: none;
   }
 
   .slide {
@@ -151,6 +94,22 @@ const numSlides = 6;
     align-items: center;
   }
 
+  .slide:last-child {
+    background-image: var(--faceImg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+  }
+
+  body.jumpscare .slide:last-child {
+    animation: jumpscare 200ms forwards;
+  }
+
+  @keyframes jumpscare {
+    from { background-size: 50%; }
+    to { background-size: 100%; }
+  }
+
   .date {
     font-family: var(--rubik);
     font-size: 2rem;
@@ -158,6 +117,7 @@ const numSlides = 6;
 
   .img {
     border-style: solid;
+    border-color: var(--border-color);
     pointer-events: none;
   }
 
@@ -172,6 +132,10 @@ const numSlides = 6;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .btn path {
+    stroke: var(--slide-color);
   }
 
   .dots {
@@ -189,9 +153,14 @@ const numSlides = 6;
     width: .6rem;
     height: .6rem;
   }
-  
+
   .dots circle {
     opacity: .25;
+    fill: var(--dot-color);
+  }
+
+  .dot.active circle {
+    opacity: 1;
   }
 
   @media (min-width: 600px) {
@@ -235,7 +204,6 @@ const numSlides = 6;
       width: 200px;
       height: 300px;
       border-width: 5px;
-      
     }
     .dots {
       top: calc(50% + 190px);
@@ -259,35 +227,48 @@ const numSlides = 6;
   }
 </style>
 
-<script>
-  function handleSlideChange(delta: number) {
-    const el = document.getElementById('slides');
-    if (!el) return;
-    const slides = el.dataset.total;
-    const idx = document.body.dataset.idx;
-    if (!slides || !idx) return;
-    const idxNum = parseInt(idx);
-    const slidesNum = parseInt(slides);
-    let newVal;
+<script define:vars={{ slides: clientSlides }}>
+  const slidesEl = document.getElementById('slides');
+  let activeIndex = parseInt(slidesEl?.dataset.idx || '0');
 
-    if (delta === -1 && idxNum > 0) {
-      newVal = idxNum - 1;
-    } else if (delta === 1 && idxNum < slidesNum - 1 ) {
-      newVal = idxNum + 1;
-    } else {
-      return;
-    }
+  function setSlide(idx, { animate = true } = {}) {
+    const clamped = Math.max(0, Math.min(idx, slides.length - 1));
+    const el = document.getElementById('slides');
+    const prevBtn = document.getElementById('slide-prev');
+    if (!el) return;
+
+    if (!animate) el.classList.add('no-transition');
 
     const w = document.body.clientWidth;
-    const nextIdx = idxNum + delta;
-    const x = w * -1 * nextIdx;
+    el.style.translate = `${w * -clamped}px`;
+    el.dataset.idx = `${clamped}`;
 
-    el.style.translate = `${x}px`;
-    document.body.dataset.idx = `${newVal}`;
+    if (!animate) requestAnimationFrame(() => el.classList.remove('no-transition'));
 
-    if (newVal === 5) {
-      setTimeout(() => goToSlide(4), 400);
+    const slide = slides[clamped];
+    document.body.style.setProperty('--bg', slide.bg);
+    document.body.style.setProperty('--slide-color', slide.color);
+    document.body.style.setProperty('--dot-color', slide.dotColor);
+    document.body.style.setProperty('--border-color', slide.borderColor);
+    document.body.classList.toggle('jumpscare', slide.isJumpscare);
+
+    if (prevBtn) prevBtn.hidden = clamped === 0;
+
+    document.querySelectorAll('.dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === clamped);
+    });
+
+    activeIndex = clamped;
+
+    if (slide.isJumpscare) {
+      setTimeout(() => setSlide(clamped - 1), 400);
     }
+  }
+
+  function handleSlideChange(delta) {
+    const next = activeIndex + delta;
+    if (next < 0 || next > slides.length - 1) return;
+    setSlide(next);
   }
 
   function addButtonListeners() {
@@ -301,9 +282,8 @@ const numSlides = 6;
   let touchendY = 0;
 
   function checkDirection() {
-    const deltaY = touchendY-touchstartY;
-    const deltaX = touchendX-touchstartX;
-    console.log(`delta ${deltaX} ${deltaY}`)
+    const deltaY = touchendY - touchstartY;
+    const deltaX = touchendX - touchstartX;
     if (Math.abs(deltaY) >= Math.abs(deltaX)) return;
     if (Math.abs(deltaX) < 50) return;
     if (touchendX < touchstartX) handleSlideChange(1);
@@ -311,78 +291,53 @@ const numSlides = 6;
   }
 
   function addSwipeListeners() {
-    document.addEventListener('touchstart', e => {
-      touchstartX = e.changedTouches[0].screenX
-      touchstartY = e.changedTouches[0].screenY
+    document.addEventListener('touchstart', (e) => {
+      touchstartX = e.changedTouches[0].screenX;
+      touchstartY = e.changedTouches[0].screenY;
     });
-  
-    document.addEventListener('touchend', e => {
-      touchendX = e.changedTouches[0].screenX
-      touchendY = e.changedTouches[0].screenY
-      checkDirection()
+
+    document.addEventListener('touchend', (e) => {
+      touchendX = e.changedTouches[0].screenX;
+      touchendY = e.changedTouches[0].screenY;
+      checkDirection();
     });
   }
 
   function addResizeObserver() {
-    let rafId: null | number = null;
+    let rafId = null;
 
     const resizeObserver = new ResizeObserver((entries) => {
       if (rafId) cancelAnimationFrame(rafId);
 
       rafId = requestAnimationFrame(() => {
         for (const entry of entries) {
-          if (entry.borderBoxSize.length > 0) {
-            const idx = document.body.dataset.idx;
-            if (!idx) return;
-            const idxNum = parseInt(idx);
-
-            const w = document.body.clientWidth;
-            const x = w * -1 * idxNum;
-            const el = document.getElementById('slides');
-            if (!el) return;
-            el.style.translate = `${x}px`;
+          if (entry.borderBoxSize.length > 0 && activeIndex) {
+            setSlide(activeIndex, { animate: false });
           }
         }
         rafId = null;
       });
-
     });
 
     resizeObserver.observe(document.body);
   }
 
-  function goToSlide(idx: number) {
-    const w = document.body.clientWidth;
-    const x = w * -1 * idx;
-    const el = document.getElementById('slides');
-    if (!el) return;
-    el.style.translate = `${x}px`;
-    document.body.dataset.idx = `${idx}`;
-
-    if (idx === 5) {
-      setTimeout(() => goToSlide(4), 400);
-    }
-  }
-
-  function handleDotClick(e: Event) {
-    const el = e.target as SVGElement;
-    if (!el) return;
-    const idx = el.parentElement?.dataset.idx;
+  function handleDotClick(e) {
+    const idx = e.target.closest('.dot')?.dataset.idx;
     if (!idx) return;
-    goToSlide(parseInt(idx));
+    setSlide(parseInt(idx));
   }
 
   function addDotListeners() {
     document.querySelectorAll('.dot').forEach((el) => {
       el.addEventListener('click', handleDotClick);
-    })
+    });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.body.dataset.idx = '0';
     addButtonListeners();
     addSwipeListeners();
     addResizeObserver();
     addDotListeners();
-  })
+  });
 </script>
