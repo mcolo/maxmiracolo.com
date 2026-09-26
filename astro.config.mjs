@@ -1,9 +1,11 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import basicSsl from '@vitejs/plugin-basic-ssl';
+import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: netlify(),
   fonts: [{
       name: "Rubik Glitch",
       cssVariable: "--rubik",
