@@ -60,12 +60,12 @@
 			}
 		});
 
-		intervalId = setInterval(async () => {
+		intervalId = window.setInterval(async () => {
 			if (++intervalCount > 10) {
 				clearInterval(intervalId);
 			}
 			logo?.classList.add('wiggle');
-			await new Promise(resolve => setTimeout(resolve, 500));
+			await new Promise(resolve => window.setTimeout(resolve, 500));
 			logo?.classList.remove('wiggle');
 		}, 60000);
 	});
@@ -142,7 +142,7 @@ body {
 }
 
 header {
-	margin: 2rem 0 1rem;
+	margin: 1rem 0;
 }
 
 .logo {
@@ -183,20 +183,11 @@ main {
 	margin-bottom: 12rem;
 }
 
-@media (min-width: 42rem) {
-	header,
-	main {
-		width: 40rem;
-		padding: 1rem;
-	}
-}
-
-@media (max-width: 42rem) {
-	header,
-	main {
-		width: 100%;
-		padding: 1rem 1.5rem;
-	}
+header,
+main {
+	padding: 1rem 2rem;
+	width: 100%;
+	max-width: 45rem;
 }
 
 @media (hover: hover) {
